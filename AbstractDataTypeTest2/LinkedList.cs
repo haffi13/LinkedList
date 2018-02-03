@@ -120,7 +120,7 @@ namespace AbstractDataTypeTest2
             }
             else
             {
-                for (int i = 0; i < index-1; i++) //index-1 cuz 0 based, might have counter start at -1 instead
+                for (int i = 0; i < index-1; i++) //index-1 cuz I want to get the item before the item I want to remove
                 {
                     temp = temp.Next;//gets the list item before the item to remove
                 }
