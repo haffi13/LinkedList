@@ -34,7 +34,7 @@ namespace AbstractDataTypeTest2
         public int Count
         {
             get { return itemCount; }
-        } 
+        }
 
         public object First { get { return firstItem; } }//First and last return null if the list is empty
         public object Last { get { return lastItem; } }
@@ -43,23 +43,21 @@ namespace AbstractDataTypeTest2
             get { return itemCount == 0; }
         }
 
-
         public void InsertFirst(object o)
         {
             ListItem itemToAdd = new ListItem(o);
-            if(firstItem == null)
+            if (firstItem == null)
             {
                 firstItem = new ListItem(itemToAdd);
-                lastItem = firstItem; 
+                lastItem = firstItem;
             }
             else
             {
-                
-                    for (int i = 0; i < Count; i++)
-                    {
-                        itemToAdd.Next = firstItem;
-                    }
-                
+                for (int i = 0; i < Count; i++)
+                {
+                    itemToAdd.Next = firstItem;
+                }
+
                 firstItem = itemToAdd;
             }
             itemCount++;
@@ -68,7 +66,7 @@ namespace AbstractDataTypeTest2
         public void InsertLast(object o)
         {
             ListItem itemToAdd = new ListItem(o);
-            if(lastItem == null)
+            if (lastItem == null)
             {
                 InsertFirst(itemToAdd);//last item is instanciated in InsertFirst is there is no previous item in the list
             }
@@ -80,7 +78,7 @@ namespace AbstractDataTypeTest2
                 itemCount++;
             }
         }
-        
+
         public object Items(int index)
         {
             ListItem temp = firstItem;
@@ -113,21 +111,27 @@ namespace AbstractDataTypeTest2
                 }
                 Console.WriteLine("Removal not possible");
             }
-            else if(index == 0)
+            else if (index == 0)
             {
                 firstItem = temp.Next;
                 itemCount--;
             }
             else
             {
-                for (int i = 0; i < index-1; i++) //index-1 cuz I want to get the item before the item I want to remove
+                for (int i = 0; i < index - 1; i++) //index-1 cuz I want to get the item before the item I want to remove
                 {
                     temp = temp.Next;//gets the list item before the item to remove
                 }
                 temp.Next = temp.Next.Next;//sets the next list item after the list item before the item to remove as the item after the item to remove
                 itemCount--;
-            } 
+            }
         }
+
+        public void Sort()
+        {
+
+        }
+
 
         public override string ToString()
         {
@@ -135,8 +139,8 @@ namespace AbstractDataTypeTest2
             ListItem listItem = firstItem;
             for (int i = 0; i < Count; i++)
             {
-                    ret += "|" + listItem.ToString();
-                    listItem = listItem.Next;
+                ret += "|" + listItem.ToString();
+                listItem = listItem.Next;
             }
             return ret;
         }

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="LinkedList.cs" />
     <Compile Include="Names.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

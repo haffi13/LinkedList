@@ -37,8 +37,6 @@ namespace AbstractDataTypeTest2
 
             //remove is zero based, if you want to remove 3rd item on the list you RemoveAt(2);
 
-            Console.WriteLine(linkedList.First);
-            Console.ReadKey();
 
             linkedList.InsertLast(names.Name);
             linkedList.InsertLast(names1.Name);
