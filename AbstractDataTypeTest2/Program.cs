@@ -34,6 +34,11 @@ namespace AbstractDataTypeTest2
             names7.Name = "Ananas";
             names8.Name = "Last";
             names9.Name = "First";
+            names.Number = 10;
+            names1.Number = 13;
+            names2.Number = 53;
+            names3.Number = 9;
+            names4.Number = 17;
 
             //remove is zero based, if you want to remove 3rd item on the list you RemoveAt(2);
 
@@ -56,12 +61,23 @@ namespace AbstractDataTypeTest2
 
             linkedList.InsertFirst(names9.Name);
 
+            //Console.WriteLine(linkedList.Last);
+
             //linkedList.InsertFirst(" ");
             //linkedList.InsertFirst(6);//can add different data types into the list...
             //linkedList.RemoveAt(2);
             //Console.WriteLine(linkedList.Items(0));
             //Console.WriteLine(linkedList.Items(4));
             //Console.WriteLine(linkedList.Items(-1));//returns null, doesnt cause havoc
+
+
+            /*linkedList.InsertFirst(names.Number);
+            linkedList.InsertFirst(names1.Number);
+            linkedList.InsertFirst(names2.Number);
+            linkedList.InsertFirst(names3.Number);
+            linkedList.InsertFirst(names4.Number);
+
+            linkedList.Sort();*/
 
             Console.WriteLine(linkedList.ToString());
 

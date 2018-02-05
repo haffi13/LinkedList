@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbstractDataTypeTest2
 {
-    class LinkedList
+    public class LinkedList
     {
         private class ListItem
         {
@@ -16,7 +16,7 @@ namespace AbstractDataTypeTest2
             public ListItem(object o)
             {
                 Item = o;
-                Next = null;
+                //Next = null;
             }
 
             public override string ToString()
@@ -36,11 +36,57 @@ namespace AbstractDataTypeTest2
             get { return itemCount; }
         }
 
-        public object First { get { return firstItem; } }//First and last return null if the list is empty
-        public object Last { get { return lastItem; } }
+        public object First
+        {
+            get
+            {
+                object result = null;
+                if(!ListIsEmpty)
+                {
+                    result = firstItem.Item;
+                }
+                return result;
+            }
+        }
+        public object Last
+        {
+            get
+            {
+                object result = null;
+                if(!ListIsEmpty)
+                {
+                    result = lastItem.Item;
+                }
+                return result;
+            }
+        }
         public bool ListIsEmpty
         {
             get { return itemCount == 0; }
+        }
+        
+        public object Items(int index)
+        {
+            object result = null;
+            ListItem temp = firstItem;
+            //object ret = temp;
+            if (index < 0 || index > Count)
+            {
+                throw new IndexOutOfRangeException("Index out of range");
+                /*//why throw exception if you can handle it without letting anything happen
+                 Console.Writeline("There is no item at this index");
+                 */
+            }
+            else
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    temp = temp.Next;
+                    //ret = temp.Item;
+                }
+                result = temp.Item;
+            }
+            return result;
         }
 
         public void InsertFirst(object o)
@@ -48,16 +94,12 @@ namespace AbstractDataTypeTest2
             ListItem itemToAdd = new ListItem(o);
             if (firstItem == null)
             {
-                firstItem = new ListItem(itemToAdd);
+                firstItem = itemToAdd;
                 lastItem = firstItem;
             }
             else
             {
-                for (int i = 0; i < Count; i++)
-                {
-                    itemToAdd.Next = firstItem;
-                }
-
+                itemToAdd.Next = firstItem;
                 firstItem = itemToAdd;
             }
             itemCount++;
@@ -68,69 +110,114 @@ namespace AbstractDataTypeTest2
             ListItem itemToAdd = new ListItem(o);
             if (lastItem == null)
             {
-                InsertFirst(itemToAdd);//last item is instanciated in InsertFirst is there is no previous item in the list
+                firstItem = itemToAdd; 
+                lastItem = firstItem;   
             }
             else
             {
-                ListItem currentLast = lastItem;
-                currentLast.Next = itemToAdd;
-                lastItem = itemToAdd;
-                itemCount++;
+                lastItem.Next = itemToAdd;  //set null value-ið eftir lastItem sem itemToAdd
+                lastItem = itemToAdd;       //þá er það orðið last item og ég set það sem last item
+                lastItem.Next = null;       //set lastItem.Next sem null
             }
+            itemCount++;
         }
 
-        public object Items(int index)
-        {
-            ListItem temp = firstItem;
-            object ret = temp;
-            if (index < 0)
-            {
-                //exception - might return a message but that's probably not correct
-                return null;
-            }
-            else
-            {
-                for (int i = 0; i < index; i++)
-                {
-                    temp = temp.Next;
-                    ret = temp;
-                }
-                return ret;
-            }
-        }
 
         public void RemoveAt(int index)
         {
-            ListItem temp = firstItem;
-
-            if (index < 0 || index >= Count)
+            if(index < itemCount && index >= 0)
             {
-                if (ListIsEmpty)
+                //ListItem temp = firstItem;
+                if (index == 0)
                 {
-                    firstItem = null;
+                    firstItem = firstItem.Next;
+                    //itemCount--;
                 }
-                Console.WriteLine("Removal not possible");
-            }
-            else if (index == 0)
-            {
-                firstItem = temp.Next;
+                else
+                {
+                    ListItem temp = firstItem;
+                    for (int i = 0; i < index - 1; i++)
+                    {
+                        temp = temp.Next;
+                    }
+                    temp.Next = temp.Next.Next;
+                    //itemCount--;
+
+                    if (index == itemCount - 1)
+                    {
+                        lastItem = temp;
+                        lastItem.Next = null;
+                        //itemCount--;
+                    }
+                }
+                
                 itemCount--;
             }
             else
             {
-                for (int i = 0; i < index - 1; i++) //index-1 cuz I want to get the item before the item I want to remove
-                {
-                    temp = temp.Next;//gets the list item before the item to remove
-                }
-                temp.Next = temp.Next.Next;//sets the next list item after the list item before the item to remove as the item after the item to remove
-                itemCount--;
+                firstItem = null;
+                lastItem = null;
             }
         }
-
+        
         public void Sort()
         {
+            if (!ListIsEmpty)
+            {
+                for (int i = 0; i < Count -1; i++) //can maybe do count - 2
+                {
+                    ListItem thisItem = null;
+                    ListItem otherItem = firstItem;
 
+                    //IComparable => -1 | 0 | 1 -> lessThan| equal | moreThan
+
+                    for (int j = 0; j < Count - 1; i++) //eða count -2 ?  CompareTo is not implemented, always returns 0
+                    {
+                        Names thisName;
+                        Names otherName;
+                        thisName = (Names)thisItem.Item;
+                        otherName = (Names)otherItem.Item;
+
+                        if (thisName.CompareTo(otherName) > 0)
+                        {
+                            ListItem temp = otherItem.Next;
+                            otherItem.Next = temp.Next.Next;
+                            temp.Next = otherItem;
+                            if(thisItem == null)
+                            {
+                                firstItem = temp;
+                            }
+                            else
+                            {
+                                thisItem.Next = temp;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+
+                    }
+                }
+                
+            }
+
+            //for (int i = 0; i < arrLenght - 2; i++)           bubble sort algorithm
+            //{
+            //    for (int j = 0; j < arrLenght - 1; j++)
+            //    {
+            //        int current = arr[j];
+            //        int next = arr[j + 1];
+            //        if (current > next)
+            //        {
+            //            arr[j] = next;
+            //            arr[j + 1] = current;
+            //        }
+            //    }
+            //    arrLenght--;//as there is not need to sort alredy sorted values
+            //}
         }
+
 
 
         public override string ToString()
@@ -139,7 +226,14 @@ namespace AbstractDataTypeTest2
             ListItem listItem = firstItem;
             for (int i = 0; i < Count; i++)
             {
-                ret += "|" + listItem.ToString();
+                if(i < Count -1)
+                {
+                    ret += listItem.ToString() + "|";
+                }
+                else
+                {
+                    ret += listItem.ToString();
+                }
                 listItem = listItem.Next;
             }
             return ret;
